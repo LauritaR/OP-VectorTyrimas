@@ -9,52 +9,76 @@ Tyrimams buvo sukurta analogiška std::vector klasė vect(vector.h faile), kurio
 Funkcionalumo palyginimo kodą galima rasti "fun_test.cpp" faile.
 Buvo patikrintos tokios funkcijos:
 1. 'reserve()' 
+
 Tikrinama reserve(1000) funkcija
 
  std::vector capacity() prieš reserve():0
+ 
  std::vector capacity() po resesrve(): 1000
+ 
  vect capacity() prieš reserve(): 0
+ 
  vect capacity() po reserve(): 1000
 
 2. 'insert()'
+
 Tikrinama insert() funkcija
 
 std::vector prieš insert(): 1 2 3 
-std::vector po insert(): 1 4 2 3 
-vect prieš insert(): 1 2 3 
+
 std::vector po insert(): 1 4 2 3 
 
+vect prieš insert(): 1 2 3 
+
+std::vector po insert(): 1 4 2 3 
+
+
 3. 'erase()'
+
 Tikrinama erase() funkcija
 
 std::vector prieš erase(): 1 4 2 3 
+
 std::vector po erase(): 1 2 3 
+
 vect prieš erase(): 1 4 2 3 
+
 vect po erase(): 1 2 3 
 
 4. 'clear()'
+
 Tikrinama clear() funkcija
 
 std::vector prieš clear(): 1 2 3 
-std::vector po clear(): 
+
+std::vector po clear():
+
 vect prieš clear(): 1 2 3
+
 vect po clear():
 
 5. 'shrink_to_fit()'
+
 Tikrinama shrink_to_fit() funkcija
 
 std::vector capacity() prieš shrink_to_fit(): 1000
+
 std::vector capacity() po shrink_to_fit(): 3
+
 vect capacity() prieš shrink_to_fit(): 1000
+
 vect capacity() po shrink_to_fit(): 3
 
 6. 'operator[]' 
+
 Tikrinamas operator[]
 
 std::vector prieš: 1 3 5
+
 std::vector po: 1 3 9
 
 vect prieš : 1 3 5
+
 std::vector po insert(): 1 3 9
 
 Taip pat, papildomai pademonstruotas 'capacity()', 'begin()', 'push_back()' funckionalumas.
