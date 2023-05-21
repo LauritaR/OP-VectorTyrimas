@@ -1,4 +1,4 @@
-# OP-VektorTyrimas
+# OP-VectorTyrimas
 Eksperimentiniai Vector klasės tyrimai
 -------------------------------------
 Tyrimams buvo sukurta analogiška std::vector klasė vect(vector.h faile), kurioje realizuoti  member tipai, member funkcijos,non-member funkcijos.
