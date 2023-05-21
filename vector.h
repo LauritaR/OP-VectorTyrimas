@@ -15,6 +15,7 @@ class vect{
         typedef std::reverse_iterator<const iterator> const_reverse_iterator;
         typedef std::ptrdiff_t difference_type;
      //member functions
+        //constructors
         vect(){create();}
         explicit vect(size_type n, const T& t =T{}){create(n,t);}
         vect(const vect& v){create(v.begin(), v.end());}
@@ -22,13 +23,10 @@ class vect{
         vect(std::initializer_list<T> initList){create(initList.begin(),initList.end());}
         template<class InputIterator>
         vect(InputIterator first, InputIterator last){create(first, last);}
+        //destructor
         ~vect(){uncreate();}
-        void assign(size_type n, const T&val)
-        {
-            uncreate();
-            create(n,val);
-        }
-       std::allocator<T> get_allocator() const{return alloc;}
+        void assign(size_type n, const T&val){uncreate();create(n,val);}
+        std::allocator<T> get_allocator() const{return alloc;}
     //element access
         reference operator[](size_type i ){return data[i];}
         const_reference operator[](size_type i)const{return data[i];}
@@ -56,12 +54,12 @@ class vect{
       //iterators
         iterator begin() {return data;}
         const_iterator begin() const{return data; }
-        reverse_iterator rbegin(){return reverse_iterator(end());}//pertikrinti
-        const_reverse_iterator rbegin() const{return reverse_iterator(end());}//per
+        reverse_iterator rbegin(){return reverse_iterator(end());}
+        const_reverse_iterator rbegin() const{return reverse_iterator(end());}
         iterator end() {return avail;}
         const_iterator end() const {return avail;}
-        reverse_iterator rend() {return reverse_iterator(begin());}//per
-        const_reverse_iterator rend()const{return reverse_iterator(begin());}//per
+        reverse_iterator rend() {return reverse_iterator(begin());}
+        const_reverse_iterator rend()const{return reverse_iterator(begin());}
  //capacity 
         bool empty() const{return size()==0;}
         size_type size() const{return avail-data;}
@@ -246,5 +244,33 @@ void vect<T>::grow(int n)
     avail=new_avail;
     limit=data+new_size;
 }
+template <class T>
+bool operator==(const vect<T>& lhs, const vect<T>& rhs) {
+    return std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
 
+template <class T>
+bool operator!=(const vect<T>& lhs, const vect<T>& rhs) {
+    return !(lhs == rhs);
+}
+
+template <class T>
+bool operator<(const vect<T>& lhs, const vect<T>& rhs) {
+    return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+template <class T>
+bool operator<=(const vect<T>& lhs, const vect<T>& rhs) {
+    return !(rhs < lhs);
+}
+
+template <class T>
+bool operator>(const vect<T>& lhs, const vect<T>& rhs) {
+    return rhs < lhs;
+}
+
+template <class T>
+bool operator>=(const vect<T>& lhs, const vect<T>& rhs) {
+    return !(lhs < rhs);
+}
 #endif

@@ -128,7 +128,7 @@ int main()
     {
         vector<int> stdVec;
         vect<int> myVec;
-        unsigned int sz=10000000;
+        unsigned int sz=100000000;
         int alloc_count=0,temp_cpct_std=0,temp_cpct_my=0;
         for(int i=1;i<=sz;++i)
         {
