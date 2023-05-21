@@ -129,12 +129,12 @@ int main()
         vector<int> stdVec;
         vect<int> myVec;
         unsigned int sz=10000000;
-        int alloc_count=0,temp_cpct=0;
+        int alloc_count=0,temp_cpct_std=0,temp_cpct_my=0;
         for(int i=1;i<=sz;++i)
         {
-            if(stdVec.capacity()!=temp_cpct)
+            if(stdVec.capacity()!=temp_cpct_std)
             {
-                temp_cpct=stdVec.capacity();
+                temp_cpct_std=stdVec.capacity();
                 alloc_count++;
             }
             stdVec.push_back(i);
@@ -143,9 +143,9 @@ int main()
         alloc_count=0;
         for(int i=1;i<=sz;++i)
         {
-            if(myVec.capacity()!=temp_cpct)
+            if(myVec.capacity()!=temp_cpct_my)
             {
-                temp_cpct=myVec.capacity();
+                temp_cpct_my=myVec.capacity();
                 alloc_count++;
             }
             myVec.push_back(i);
