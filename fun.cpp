@@ -4,48 +4,7 @@
  */
 
 #include "fun.h"
-/**
- * @brief Overloads the assignment operator.
- * 
- * @param kitas The studentukas object to copy from.
- * @return A reference to the current object.
- */
- studentukas& studentukas::operator=(const studentukas& kitas)
-    {
-        vardas=kitas.vardas;
-        pavarde=kitas.pavarde;
-        pazymiukai=kitas.pazymiukai;
-        egzas=kitas.egzas;
-        return *this;
-    }
 
-   /**
- * @brief Move constructor.
- * 
- * @param kitas The studentukas object to move from.
- */
-    studentukas::studentukas(studentukas&& kitas)
-    {
-        vardas=std::move(kitas.vardas);
-        pavarde=std::move(kitas.pavarde);
-        pazymiukai=std::move(kitas.pazymiukai);
-        egzas=std::move(kitas.egzas);
-    }
-
- /**
- * @brief Move assignment operator.
- * 
- * @param kitas The studentukas object to move from.
- * @return A reference to the current object.
- */
-    studentukas& studentukas::operator=( studentukas&& kitas)
-    {
-        vardas=std::move(kitas.vardas);
-        pavarde=std::move(kitas.pavarde);
-        pazymiukai=std::move(kitas.pazymiukai);
-        egzas=std::move(kitas.egzas);
-        return *this;
-    }
 /**
  * @brief Overloads the input operator.
  * 

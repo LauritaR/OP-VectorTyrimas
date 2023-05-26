@@ -106,21 +106,32 @@ class studentukas:public zmogus{
      * @param kitas The studentukas object to copy.
      */
 
-    studentukas(const studentukas& kitas): zmogus{kitas.vardas,kitas.pavarde}, pazymiukai(kitas.pazymiukai),egzas(kitas.egzas){}
+    studentukas(const studentukas& kitas): zmogus(kitas.vardas,kitas.pavarde), pazymiukai(kitas.pazymiukai),egzas(kitas.egzas){}
     /**
 
     @brief Copy assignment operator for studentukas object.
     @param kitas The studentukas object to be copied from.
     @return studentukas& The reference to the copied studentukas object.
     */
-    studentukas& operator=(const studentukas& kitas);
+    studentukas& operator=(const studentukas& kitas)
+    {
+        if (&kitas == this)
+        return *this;
 
-    /**
+        vardas=kitas.vardas;
+        pavarde=kitas.pavarde;
+        pazymiukai=kitas.pazymiukai;
+        egzas=kitas.egzas;
+        return *this;
+    }
+  /**
+ * @brief Move constructor.
+ * 
+ * @param kitas The studentukas object to move from.
+ */
 
-    @brief Move constructor for studentukas object.
-    @param kitas The studentukas object to be moved from.
-    */
-    studentukas(studentukas&& kitas);
+    studentukas(studentukas&& kitas) : zmogus{std::move(kitas.vardas),std::move(kitas.pavarde)}, pazymiukai(std::move(kitas.pazymiukai)), egzas(kitas.egzas)
+    {kitas.~studentukas();} 
 
     /**
 
@@ -128,7 +139,17 @@ class studentukas:public zmogus{
         @param kitas The studentukas object to be moved from.
         @return studentukas& The reference to the moved studentukas object.
         */
-    studentukas& operator=( studentukas&& kitas);
+    studentukas& operator=( studentukas&& kitas)
+    {
+        if (&kitas == this)
+        return *this;
+        pazymiukai.clear();
+        vardas = kitas.vardas;
+        pavarde = kitas.pavarde;
+        pazymiukai = kitas.pazymiukai;
+        egzas = kitas.egzas;
+        return *this;
+    }
         /**
 
         @brief Input stream operator for studentukas object.
