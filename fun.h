@@ -20,7 +20,7 @@ class zmogus{
         /**
          * @brief Virtual destructor for zmogus class.
          */
-        virtual ~zmogus(){};
+        virtual ~zmogus(){vardas.clear();pavarde.clear();}
         /**
          * @brief Pure virtual function for setting the first name of the person.
          * @param v A string representing the first name of the person.
@@ -130,8 +130,12 @@ class studentukas:public zmogus{
  * @param kitas The studentukas object to move from.
  */
 
-    studentukas(studentukas&& kitas) : zmogus{std::move(kitas.vardas),std::move(kitas.pavarde)}, pazymiukai(std::move(kitas.pazymiukai)), egzas(kitas.egzas)
-    {kitas.~studentukas();} 
+    studentukas(studentukas&& kitas) : zmogus(std::move(kitas.vardas),std::move(kitas.pavarde)), pazymiukai(std::move(kitas.pazymiukai)), egzas(kitas.egzas)
+    {   kitas.vardas.clear();
+        kitas.pavarde.clear();
+        kitas.pazymiukai.clear();
+        kitas.egzas=0;
+        } 
 
     /**
 
@@ -143,11 +147,15 @@ class studentukas:public zmogus{
     {
         if (&kitas == this)
         return *this;
-        pazymiukai.clear();
         vardas = kitas.vardas;
         pavarde = kitas.pavarde;
         pazymiukai = kitas.pazymiukai;
         egzas = kitas.egzas;
+
+        kitas.vardas.clear();
+        kitas.pavarde.clear();
+        kitas.pazymiukai.clear();
+        kitas.egzas=0;
         return *this;
     }
         /**
@@ -241,7 +249,10 @@ class studentukas:public zmogus{
  
     ~studentukas()//destructor
     {
+        vardas.clear();
+        pavarde.clear();
         pazymiukai.clear();
+        egzas=0;
     }
 };
 

@@ -249,7 +249,6 @@ try//exception handling 2
                 }
                   /*   laik.setEgzas(paz); */
                     stud.push_back(studentukas(v1,p1,paz1,egz1));
-                    paz1.clear();
                 }
             
         }
@@ -257,14 +256,14 @@ try//exception handling 2
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> difference = end - start;
-    cout << "Duomenų nuskaitymas iš failo užtruko: " << difference.count() << " s\n";
+    cout << "Duomenų nuskaitymas iš failo užtruko: " <<fixed << setprecision(7)<< difference.count() << " s\n";
     start = std::chrono::high_resolution_clock::now();
     sort(stud.begin(), stud.end(), [](const studentukas& a, const studentukas& b) {
         return a.getGalutinisVID() < b.getGalutinisVID();
     });
     end = std::chrono::high_resolution_clock::now();
     difference = end - start;
-    cout << "Rūšiavimas užtruko: " << difference.count() << " s\n";
+    cout << "Rūšiavimas užtruko: " <<fixed << setprecision(7)<< difference.count() << " s\n";
 }
 /**
  * @brief This function writes the student data to a file.
@@ -273,7 +272,7 @@ try//exception handling 2
  * @param stud The vector of student objects containing the data to be written.
  */
 void rasymas(string write_studentukas, vect<studentukas>& stud) {
-     SetConsoleOutputCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
     ofstream out;
     out.open(write_studentukas);
     out<<setw(20)<<left<<"Vardas"<<setw(20)<<left<<"Pavardė"<<setw(20)<<left<<"Galutinis(vid)"<<endl;
@@ -331,7 +330,7 @@ void fileGen(string& filename)
     fin.close();
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> difference = end - start;
-    cout <<filesize<< "Įrašų generavimas užtruko: " << difference.count() << " s\n";
+    cout <<filesize<< "Įrašų generavimas užtruko: " << fixed << setprecision(7)<<difference.count() << " s\n";
 }
 /**
 
@@ -364,6 +363,6 @@ void skirstymas(string filename)
     
     end = std::chrono::high_resolution_clock::now();
     difference = end - start;
-    cout <<"Įrašų rašymas užtruko: " << difference.count() << " s\n";
+    cout <<"Įrašų rašymas užtruko: " << fixed << setprecision(7)<<difference.count() << " s\n";
 }
 

@@ -7,6 +7,27 @@ int main()
     studentukas laikinas;
     string pavadinimas,ats="";
     
+    //rule of five testavimas
+    studentukas obj1("Studentas", "Studentaitis", {5,4,10}, 10);
+    studentukas obj2(obj1);
+    studentukas obj3;
+    obj3=obj1;
+    cout<<obj1<<'\n'<<obj2<<'\n'<<obj3<<'\n';
+    studentukas obj4(std::move(obj3));
+    cout<<obj3<<'\n'<<obj4<<'\n';
+    studentukas obj5;
+    obj5=std::move(obj4);
+    cout<<obj4<<'\n'<<obj5<<'\n'; 
+    //testavimo pabaiga
+     //abstract class test
+    studentukas s;
+    s.setVardas("Studentas");
+    s.setPavarde("Studentaitis");
+    cout<<"Vardas: "<<s.getVardas()<<endl;
+    cout<<"Pavardė: "<<s.getPavarde()<<endl;
+    cout<<endl;
+    //testavimo pabaiga
+
     while(ats!="f"&&ats!="i"&&ats!="g"&&ats!="s"&&ats!="e")
     {
         cout<<"-Duomenų įvedimas ranka(i)\n-Nuskaitymas iš failo(f)\n-Failo generavimas(g)\n-Failo skirstymas(s)\n-Išeiti(e)\n----Įveskite raidę----\n";
@@ -30,7 +51,7 @@ int main()
         fileGen(pavadinimas);  
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> difference = end - start;
-        cout <<"Visas programos laikas:" << difference.count() << " s\n"; 
+        cout <<"Visas programos laikas:" <<fixed << setprecision(7)<< difference.count() << " s\n"; 
     }
     else if(ats=="s")
     {
@@ -40,7 +61,7 @@ int main()
         skirstymas(pavadinimas);  
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> difference = end - start;
-        cout <<"Visas programos laikas:" << difference.count() << " s\n"; 
+        cout <<"Visas programos laikas:" <<fixed << setprecision(7)<< difference.count() << " s\n"; 
     }
     else if(ats=="i")
     {

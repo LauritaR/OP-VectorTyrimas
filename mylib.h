@@ -8,16 +8,19 @@
 #include <string>
 #include <algorithm>
 #include <limits>
+#include <memory>
 #include <time.h>
 #include <fstream>
 #include <sstream>
 #include <chrono>
-#include"vector.h"
+#include"vector.h" 
 #include<random>
 #include<locale.h>
 #include <clocale>
 #include<deque>
 #include <execution>
+#include <stdexcept>
+#include<initializer_list>
 #include<list>
 #include<Windows.h>
 using std::allocator;

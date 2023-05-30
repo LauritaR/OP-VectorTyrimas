@@ -1,6 +1,5 @@
 #ifndef VECTOR_H
 #define VECTOR_H
-#include <memory>
 template <class T>
 class vect{
     public: 
@@ -14,59 +13,74 @@ class vect{
         typedef std::reverse_iterator<iterator> reverse_iterator;
         typedef std::reverse_iterator<const iterator> const_reverse_iterator;
         typedef std::ptrdiff_t difference_type;
+
      //member functions
         //constructors
-        vect(){create();}
-        explicit vect(size_type n, const T& t =T{}){create(n,t);}
-        vect(const vect& v){create(v.begin(), v.end());}
-        vect& operator=(const vect&);
-        vect(std::initializer_list<T> initList){create(initList.begin(),initList.end());}
-        template<class InputIterator>
-        vect(InputIterator first, InputIterator last){create(first, last);}
-        //destructor
-        ~vect(){uncreate();}
-        void assign(size_type n, const T&val){uncreate();create(n,val);}
-        std::allocator<T> get_allocator() const{return alloc;}
-    //element access
-        reference operator[](size_type i ){return data[i];}
-        const_reference operator[](size_type i)const{return data[i];}
-        reference at(size_type i)
-        {
-            if(i>=size())
-            {
-                throw std::out_of_range("Vector::at");
-            }
-            return data[i];
-        }
-        const_reference at(size_t i)const
-        {
-            if(i>=size())
-            {
-                throw std::out_of_range("Vector::at");
-            }
-            return data[i];
-        }
+        vect(){create();}//default
 
-        reference front(){return data[0];}
-        const_reference front()const{return data[0];}
-        reference back(){return data[size()-1];}
-        const_reference back()const{return data[size()-1];}
+        explicit vect(size_type n, const T& t =T{}){create(n,t);}//constructor with initial size and value
+
+        vect(const vect& v){create(v.begin(), v.end());}//copy constructor
+
+        vect& operator=(const vect&);//copy assignment
+
+        vect(vect&& v): data(v.data),avail(v.avail), limit(v.limit){v.data=v.avail=v.limit=nullptr;}//move cons
+
+        vect& operator=(vect&&);//move assign
+
+        vect(std::initializer_list<T> initList){create(initList.begin(),initList.end());}//constructor with initializer list
+
+        template<class InputIterator>
+        vect(InputIterator first, InputIterator last){create(first, last);}//constructor with range
+        
+        void assign(size_type n, const T&val){uncreate();create(n,val);}//assigns new values to the vector
+
+        std::allocator<T> get_allocator() const{return alloc;}
+
+    //element access
+        reference operator[](size_type i ){return data[i];}//access element as index
+
+        const_reference operator[](size_type i)const{return data[i];} //access elem at indx
+
+        reference at(size_type i){if(i>=size()){throw std::out_of_range("Vector::at");}return data[i];}//access elem at inx with bounds checking
+
+        const_reference at(size_t i)const{if(i>=size()){throw std::out_of_range("Vector::at");}return data[i];}//access elem and indx with bounds checking
+
+        reference front(){return data[0];}//access first elem
+
+        const_reference front()const{return data[0];}//access first elem
+
+        reference back(){return data[size()-1];}//access last elem
+
+        const_reference back()const{return data[size()-1];}//access last elem
       //iterators
-        iterator begin() {return data;}
-        const_iterator begin() const{return data; }
-        reverse_iterator rbegin(){return reverse_iterator(end());}
-        const_reverse_iterator rbegin() const{return reverse_iterator(end());}
-        iterator end() {return avail;}
-        const_iterator end() const {return avail;}
-        reverse_iterator rend() {return reverse_iterator(begin());}
-        const_reverse_iterator rend()const{return reverse_iterator(begin());}
+        iterator begin() {return data;}//iterator to the beginning
+
+        const_iterator begin() const{return data;}//iterator to the beginning 
+
+        reverse_iterator rbegin(){return reverse_iterator(end());}//reverse iterator to the beginning
+
+        const_reverse_iterator rbegin() const{return reverse_iterator(end());}//reverse iterator to the beginning
+
+        iterator end() {return avail;}//iteartor to the end
+
+        const_iterator end() const {return avail;}//iterator to the end
+
+        reverse_iterator rend() {return reverse_iterator(begin());}// reverse iterator to the end
+
+        const_reverse_iterator rend()const{return reverse_iterator(begin());}//reverse iterator to the end
  //capacity 
-        bool empty() const{return size()==0;}
-        size_type size() const{return avail-data;}
-        size_t max_size() const{return std::numeric_limits<size_t>::max();}
-        size_t capacity()const{return limit-data;}
-        void reserve(size_type  n){ if(n>capacity()) grow(n);}
-        void shrink_to_fit()
+        bool empty() const{return size()==0;}//check if vector is empty
+
+        size_type size() const{return avail-data;}// get the current size of the vector
+
+        size_type max_size() const{return std::numeric_limits<size_t>::max();}//get the max possible size of the vector
+
+        size_type capacity()const{return limit-data;}// get the current capacity of the vector
+
+        void reserve(size_type  n){ if(n>capacity()) grow(n);}//reserve memory for n elem
+
+        void shrink_to_fit()//shrink the capacity to fit the current size
         {
             iterator new_data = alloc.allocate(size());
             iterator new_avail = std::uninitialized_copy(data, avail, new_data);
@@ -76,22 +90,14 @@ class vect{
             limit = data + size();
         }
     //modifiers
-        void clear(){return uncreate();}
+        void clear(){return uncreate();}//clear the vector
         
-        void push_back(const T& t)
-        {
-            if(avail==limit)
-                grow();
-            unchecked_append(t);
-        }
-        
-        iterator insert(const_iterator pos, const T& value)
+        void push_back(const T& t){if(avail==limit)grow();unchecked_append(t);}//add an element to the end
+
+        iterator insert(const_iterator pos, const T& value)//insert an element at a specific position
         {
             size_type i= pos-begin();
-            if(avail==limit)
-            {
-                grow();
-            }
+            if(avail==limit){grow();}
             iterator p=begin()+i;
             std::copy_backward(p, avail, avail+1);
             *p=value;
@@ -99,14 +105,15 @@ class vect{
             return p;
         }
 
-        iterator erase(const_iterator pos)
+        iterator erase(const_iterator pos)//erase an element at a specific position
         {
            iterator n= const_cast<iterator>(pos);
            std::copy(n+1,avail, n);
            alloc.destroy(--avail);
            return n;
         }
-        iterator erase(const_iterator first,const_iterator last)
+
+        iterator erase(const_iterator first,const_iterator last)//erase element at a range
         {
             if(first>=data && last<=avail &&first<last)
             {
@@ -122,12 +129,12 @@ class vect{
             }
             return const_cast<iterator>(first);
             }
-        return avail;
+            return avail;
         }
 
-        void pop_back(){erase(end()-1);}
+        void pop_back(){erase(end()-1);}//remove the last elem
 
-        void resize(size_t count, const T& value)
+        void resize(size_t count, const T& value)//resize the vector
         {
             if(count>size())
             {
@@ -149,7 +156,10 @@ class vect{
             }
         }
 
-     void unchecked_append(const T& val){alloc.construct(avail++,val);}
+        void unchecked_append(const T& val){alloc.construct(avail++,val);}
+     
+        ~vect(){uncreate();}//destructor
+
         private:
         iterator data;
         iterator avail;
@@ -170,19 +180,30 @@ class vect{
             data=alloc.allocate(last-first);
             limit=avail=std::uninitialized_copy(first,last,data);
         }
-
-        
 };
 
 template <class T>
-vect<T>& vect<T>::operator=(const vect& rhs)//rhs is right-hand side
+vect<T>& vect<T>::operator=(const vect& v)
 {
-    if(&rhs !=this)
+    if(&v !=this)
         {
             uncreate();
-            create(rhs.begin(), rhs.end());
+            create(v.begin(), v.end());
         }
     return *this;
+}
+
+template<class T>
+vect<T>& vect<T>::operator=(vect&& v)
+{
+    if (&v != this) {
+            uncreate();
+            data = v.data;
+            avail = v.avail;
+            limit = v.limit;
+            v.data = v.avail = v.limit = nullptr;
+        }
+        return *this;
 }
 template <class T>
 void vect<T>::create()
@@ -194,7 +215,7 @@ void vect<T>::create(size_type n, const T& val)
 {
     data=alloc.allocate(n);
     limit=avail=data+n;
-    uninitialized_fill(data,limit,val);
+    uninitialized_fill_n(data,limit,val);
 }
 
 template<class T>
