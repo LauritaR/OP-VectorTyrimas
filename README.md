@@ -111,6 +111,7 @@ v2: 1 2 3
 v3: 1 2 3
 
 std::vector Move constructor ir move assigment tikrinimas:
+
 v4:
 
 v5:
