@@ -81,7 +81,59 @@ vect prieš : 1 3 5
 
 std::vector po insert(): 1 3 9
 
-Taip pat, papildomai pademonstruotas 'capacity()', 'begin()', 'push_back()' funckionalumas.
+7. push_back su Studentuko objektais
+
+std::vector push_back:
+
+Studentas      Studentaitis        5    4    10   6.73
+
+Studentė      Studentaitė        10   8    10   7.33
+
+Richard        Feynman             10   10   10   10.00
+
+
+vect push_back:
+
+Studentas      Studentaitis        5    4    10   6.73
+
+Studentė      Studentaitė        10   8    10   7.33
+
+Richard        Feynman             10   10   10   10.00  
+
+8. copy constructor, copy assignment, move constructor, move assignment
+
+std::vector Copy constructor ir copy assignment tikrinimas:
+
+v1: 1 2 3
+
+v2: 1 2 3
+
+v3: 1 2 3
+
+std::vector Move constructor ir move assigment tikrinimas:
+v4:
+
+v5:
+
+v6: 1 2 3
+
+
+ vect Copy constructor ir copy assignment tikrinimas:
+v1: 1 2 3
+
+v2: 1 2 3
+
+v3: 1 2 3
+
+vect Move constructor ir move assigment tikrinimas:
+
+v4:
+
+v5:
+
+v6: 1 2 3
+
+Taip pat, papildomai pademonstruotas 'capacity()', 'begin()' funckionalumas.
 
 ----------------------------
 *Efektyvumo analizė*
@@ -91,7 +143,7 @@ Palyginamas std::vector su vect konteineriu, matuojant, kiek laiko užtrunka už
 Išmatuojamas laikas, kiek užtrunka užpildyti vektorių su *10.000,100.000,1.000.000,10.000.000,100.000.000* int tipo elementų.
 
 
-|Įrašų sk.    |std::vector(s)|vect(s)|
+|Įrašų sk.    |std::vector(s)|vect(s)      |
 |-------------|--------------|-------------|
 |10000        |0.0002168     |0.0001539    |
 |100000       |0.0010394     |0.0002418    |
